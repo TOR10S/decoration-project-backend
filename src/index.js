@@ -6,6 +6,4 @@ const bootstrap = async () => {
   startServer();
 };
 
-/*test*/
-
 bootstrap();
