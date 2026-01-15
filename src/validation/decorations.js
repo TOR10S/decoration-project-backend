@@ -31,10 +31,6 @@ export const createDecorationSchema = Joi.object({
       'any.required': 'Кольори є обов’язковим полем.',
       'string.empty': 'Поле кольорів не може бути порожнім.'
     }),
-  images: Joi.array()
-    .messages({
-      'array.base': 'Поле images має бути масивом.'
-    }),
   review: Joi.string()
     .messages({
       'string.base': 'Відгук має бути рядком.'
@@ -65,10 +61,6 @@ export const updateDecorationSchema = Joi.object({
       'string.min': 'Поле кольорів має містити мінімум {#limit} символи.',
       'string.max': 'Поле кольорів має містити максимум {#limit} символів.',
       'string.empty': 'Поле кольорів не може бути порожнім.'
-    }),
-  images: Joi.array()
-    .messages({
-      'array.base': 'Поле images має бути масивом.'
     }),
   review: Joi.string()
     .messages({

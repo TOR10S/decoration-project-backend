@@ -3,6 +3,7 @@ import createHttpError from 'http-errors';
 import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 import { parseSortParams } from "../utils/parseSortParams.js";
 import { parseFilterParams } from "../utils/parseFilterParams.js";
+import { saveFilesToUpl } from '../utils/saveFilesToUpl.js';
 
 export const getDecorationsController = async (req, res,next) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -18,10 +19,22 @@ export const getDecorationsController = async (req, res,next) => {
 };
 
 export const createDecorationController = async (req, res) => {
-  const decoration = await createDecoration(req.body);
+  const files = req.files;
+  let photos = [];
+
+  if (files && files.length > 0) {
+    photos = await Promise.all(
+      files.map(file => saveFilesToUpl(file))
+    );
+  }
+
+  const decoration = await createDecoration({
+    ...req.body,
+    images: photos,
+  });
   res.status(201).json({
     status: 201,
-    message: `Successfully created a decoration`,
+    message: "Successfully created a decoration",
     data: decoration,
   });
 };
@@ -39,9 +52,24 @@ if (!decoration) {
 
 export const upsertDecorationController = async (req, res,next) => {
   const { decorationId } = req.params;
-  const result = await updateDecoration(decorationId, req.body, {
-    upsert: true,
-  });
+  const files = req.files;
+
+  let images = [];
+
+  if (files && files.length > 0) {
+    images = await Promise.all(
+      files.map(file => saveFilesToUpl(file))
+    );
+  }
+
+  const result = await updateDecoration(
+    decorationId,
+    {
+      ...req.body,
+      ...(images.length > 0 && { images }),
+    },
+    { upsert: true }
+  );
 
   if (!result) {
     next(createHttpError(404, 'Decoration not found'));
@@ -53,13 +81,26 @@ export const upsertDecorationController = async (req, res,next) => {
   res.status(status).json({
     status,
     message: `Successfully upserted a decoration`,
-    data: result.student,
+    data: result.decoration,
   });
 };
 
 export const patchDecorationController = async (req, res,next) => {
   const { decorationId } = req.params;
-  const result = await updateDecoration(decorationId, req.body);
+  const files = req.files;
+
+  let images = [];
+
+  if (files && files.length > 0) {
+    images = await Promise.all(
+      files.map(file => saveFilesToUpl(file))
+    );
+  }
+
+  const result = await updateDecoration(decorationId, {
+    ...req.body,
+    ...(images.length > 0 && { images }),
+  });
   if (!result) {
     next(createHttpError(404, 'Student not found'));
     return;
@@ -68,6 +109,6 @@ export const patchDecorationController = async (req, res,next) => {
   res.json({
     status: 200,
     message: `Successfully patched a student!`,
-    data: result.student,
+    data: result.decoration,
   });
 };

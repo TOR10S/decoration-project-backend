@@ -5,6 +5,8 @@ import { validateBody } from "../middlewares/validateBody.js";
 import { createDecorationSchema, updateDecorationSchema } from "../validation/decorations.js";
 import { isValidDecorationId } from "../middlewares/isValidDecorationId.js";
 import { auth } from "../middlewares/authVer.js";
+import { upload } from '../middlewares/multer.js';
+
 const router = Router();
 
 router.get('/', controllerWrapper(getDecorationsController));
@@ -12,6 +14,7 @@ router.post(
   "/",
   auth,
   validateBody(createDecorationSchema),
+  upload.array('images', 30),
   controllerWrapper(createDecorationController)
 );
 
@@ -27,6 +30,7 @@ router.put(
   auth,
   isValidDecorationId,
   validateBody(updateDecorationSchema),
+  upload.array('images', 30),
   controllerWrapper(upsertDecorationController)
 );
 
@@ -35,6 +39,7 @@ router.patch(
   auth,
   isValidDecorationId,
   validateBody(updateDecorationSchema),
+  upload.array('images', 30),
   controllerWrapper(patchDecorationController)
 );
 
