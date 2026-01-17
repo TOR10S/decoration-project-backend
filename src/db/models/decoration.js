@@ -16,7 +16,18 @@ const decorationsSchema = new Schema(
       required: true,
     },
     images: {
-        type:Array,
+        type: [
+    {
+      url: {
+        type: String,
+        required: true,
+      },
+      publicId: {
+        type: String,
+        required: true,
+      },
+    }
+  ],
         required: false,
     },
     review: {

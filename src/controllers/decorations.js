@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 import { parseSortParams } from "../utils/parseSortParams.js";
 import { parseFilterParams } from "../utils/parseFilterParams.js";
-import { saveFilesToUpl } from '../utils/saveFilesToUpl.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getDecorationsController = async (req, res,next) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -24,7 +24,7 @@ export const createDecorationController = async (req, res) => {
 
   if (files && files.length > 0) {
     photos = await Promise.all(
-      files.map(file => saveFilesToUpl(file))
+      files.map(file => saveFileToCloudinary(file, 'decorations'))
     );
   }
 
@@ -58,7 +58,7 @@ export const upsertDecorationController = async (req, res,next) => {
 
   if (files && files.length > 0) {
     images = await Promise.all(
-      files.map(file => saveFilesToUpl(file))
+      files.map(file => saveFileToCloudinary(file, 'decorations'))
     );
   }
 
@@ -93,7 +93,7 @@ export const patchDecorationController = async (req, res,next) => {
 
   if (files && files.length > 0) {
     images = await Promise.all(
-      files.map(file => saveFilesToUpl(file))
+      files.map(file => saveFileToCloudinary(file, 'decorations'))
     );
   }
 
