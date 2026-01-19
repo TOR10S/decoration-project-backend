@@ -15,6 +15,17 @@ export const saveFileToCloudinary = async (file, folder) => {
   const response = await cloudinary.v2.uploader.upload(file.path, {
     folder,
     resource_type: 'image',
+     transformation: [
+      {
+        width: 1920,
+        crop: 'limit',
+      },
+      {
+        quality: 'auto:good',
+        fetch_format: 'auto',
+      },
+    ],
+    flags: 'progressive',
   });
   await fs.unlink(file.path);
     return {

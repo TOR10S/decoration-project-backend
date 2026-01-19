@@ -40,6 +40,11 @@ if (filter.colors && Array.isArray(filter.colors) && filter.colors.length > 0) {
   };;
 };
 
+export const getDecorationById = async (decorationId) => {
+  const decoration = await DecorationsCollection.findById(decorationId);
+  return decoration;
+};
+
 export const createDecoration = async (payload) => {
   const decoration = await DecorationsCollection.create(payload);
   return decoration;
