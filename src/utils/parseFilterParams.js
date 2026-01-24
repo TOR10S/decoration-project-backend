@@ -15,6 +15,16 @@ const parseText = (value) => {
   }
 };
 
+const parseIsReadyToGo = (value) => {
+  if (!value) return;
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === 'true') return true;
+    if (normalized === 'false') return false;
+  }
+};
+
 const parseTextArray = (value) => {
   const isString = typeof value === 'string';
   if (!isString) return;
@@ -27,15 +37,18 @@ const parseTextArray = (value) => {
 };
 
 export const parseFilterParams = (query) => {
-  const { typeOfDecorations, theme, colors } = query;
+  const { typeOfDecorations, theme, colors, isReadyToGo } = query;
 
   const parsedTypeOfDecoration = parseTypeOfDecoration(typeOfDecorations);
   const parsedTheme = parseText(theme);
   const parsedColors= parseTextArray(colors);
+  const parsedIsReady= parseIsReadyToGo(isReadyToGo);
 
   return {
     typeOfDecorations: parsedTypeOfDecoration,
     theme: parsedTheme,
     colors: parsedColors,
+    isReadyToGo: parsedIsReady
   };
 };
+

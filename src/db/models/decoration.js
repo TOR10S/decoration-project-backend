@@ -33,7 +33,11 @@ const decorationsSchema = new Schema(
     review: {
       type: String,
       required: false,
-    }
+    },
+    isReadyToGo: {
+    type: Boolean,
+    default: false,
+  }
   },
   {
     timestamps: true,

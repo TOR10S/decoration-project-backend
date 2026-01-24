@@ -16,6 +16,9 @@ export const getAllDecorations = async ({ page = 1,
   if (filter.theme) {
     decorationsQuery.where('theme').equals(filter.theme);
   }
+  if (typeof filter.isReadyToGo === 'boolean') {
+    decorationsQuery.where('isReadyToGo').equals(filter.isReadyToGo);
+  }
 if (filter.colors && Array.isArray(filter.colors) && filter.colors.length > 0) {
     const andFilters = filter.colors.map(color => ({
       colors: { $regex: color, $options: 'i' }
