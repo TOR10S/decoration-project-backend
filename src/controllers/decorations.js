@@ -46,9 +46,6 @@ export const deleteDecorationController = async (req, res,next) => {
    if (!decoration) {
   next(createHttpError(404, "decoration not found"));
 }
-   if (!decoration) {
-  next(createHttpError(404, "decoration not found"));
-}
     if (decoration.images?.length > 0) {
     await Promise.all(
       decoration.images.map(image =>
@@ -57,10 +54,6 @@ export const deleteDecorationController = async (req, res,next) => {
     );
   }
     await deleteDecoration(decorationId);
-if (!decoration) {
-  next(createHttpError(404, "decoration not found"));
-}
-
   res.status(204).send();
 };
 

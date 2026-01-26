@@ -1,12 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { getEnvVar } from "../utils/getEnvVar.js";
+import createHttpError from "http-errors";
 
 export const loginService = async ({ password }) => {
   if (!password) {
-    const error = new Error("Password is required");
-    error.status = 400;
-    throw error;
+    throw createHttpError(400, "Password is required");
   }
 
   const passwordHash = getEnvVar("ADMIN_PASSWORD");
@@ -15,9 +14,7 @@ export const loginService = async ({ password }) => {
   const isValidPassword = await bcrypt.compare(password, passwordHash);
 
   if (!isValidPassword) {
-    const error = new Error("Wrong password");
-    error.status = 401;
-    throw error;
+    throw createHttpError(401, "Wrong password");
   }
 
   const token = jwt.sign(

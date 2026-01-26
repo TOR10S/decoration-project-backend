@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken";
 import { getEnvVar } from "../utils/getEnvVar.js";
+import createHttpError from 'http-errors';
+
 
 export function auth(req, res, next) {
  const token = req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({ message: "Не авторизований" });
+    throw createHttpError(401, "not authorized");
   }
 
   try {
@@ -13,6 +15,7 @@ export function auth(req, res, next) {
     req.user = decoded;
     next();
   } catch {
-    res.status(401).json({ message: "Токен недійсний" });
+    throw createHttpError(401, "token expiered");
   }
 }
+
