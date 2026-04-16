@@ -1,7 +1,7 @@
 const parseTypeOfDecoration = (typeOfDecorations) => {
   const isString = typeof typeOfDecorations === 'string';
   if (!isString) return;
-  const isTypeOfDecorations = (typeOfDecorations) => ["Фотозона","Комплексний декор"].includes(typeOfDecorations);
+  const isTypeOfDecorations = (typeOfDecorations) => ["Фотозона","Диво куля", "Гендер-паті"].includes(typeOfDecorations);
 
   if (isTypeOfDecorations(typeOfDecorations)) return typeOfDecorations;
 };

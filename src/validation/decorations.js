@@ -1,11 +1,11 @@
 import Joi from 'joi';
 export const createDecorationSchema = Joi.object({
   typeOfDecorations: Joi.string()
-    .valid("Фотозона", "Комплексний декор")
+    .valid("Фотозона", "Диво куля", "Гендер-паті")
     .required()
     .messages({
       'string.base': 'Тип декорації має бути рядком.',
-      'any.only': 'Тип декорації повинен бути одним із: "Фотозона" або "Комплексний декор".',
+      'any.only': 'Тип декорації повинен бути одним із: "Фотозона" або "Диво куля" або "Гендер-паті".',
       'any.required': 'Тип декорації є обов’язковим полем.',
       'string.empty': 'Тип декорації не може бути порожнім.'
     }),
@@ -38,10 +38,10 @@ export const createDecorationSchema = Joi.object({
 });
 export const updateDecorationSchema = Joi.object({
   typeOfDecorations: Joi.string()
-    .valid("Фотозона", "Комплексний декор")
+    .valid("Фотозона", "Диво куля", "Гендер-паті")
     .messages({
       'string.base': 'Тип декорації має бути рядком.',
-      'any.only': 'Тип декорації повинен бути одним із: "Фотозона" або "Комплексний декор".',
+      'any.only': 'Тип декорації повинен бути одним із: "Фотозона" або "Диво куля" або "Гендер-паті".',
       'string.empty': 'Тип декорації не може бути порожнім.'
     }),
   theme: Joi.string()
