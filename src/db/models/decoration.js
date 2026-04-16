@@ -5,7 +5,7 @@ const decorationsSchema = new Schema(
     typeOfDecorations: {
       type: String,
       required: true,
-      enum: ["Фотозона","Комплексний декор"]
+      enum: ["Фотозона","Диво куля", "Гендер-паті"]
     },
     theme: {
       type: String,
